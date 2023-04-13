@@ -1,0 +1,12 @@
+{
+    "component": "r2artifact",
+    "repoName": "lib_access_database_life",
+    "uuaa": "pisd",
+    "slave_label": "apx",
+    "extra_properties": null,
+    "apxrepoBranch": "master",
+    "componentPaaSId": "lib_access_database_life",
+    "appPaaSId": "pisd",
+    "proyectPaaSId": "pe.pisd.app-id-26197.dsg",
+    "resource_type": "lib"
+}
