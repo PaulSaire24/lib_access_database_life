@@ -1,14 +1,17 @@
 package com.bbva.pisd.lib.r350.impl;
 
 import com.bbva.apx.exception.db.NoResultException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Arrays;
 
-/**
- * The PISDR350Impl class...
- */
+import static java.util.Objects.nonNull;
+
 public class PISDR350Impl extends PISDR350Abstract {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PISDR350Impl.class);
@@ -16,18 +19,18 @@ public class PISDR350Impl extends PISDR350Abstract {
 	@Override
 	public int executeInsertSingleRow(String queryId, Map<String, Object> arguments, String... requiredParameters) {
 		LOGGER.info("***** PISDR350Impl - insertSingleRow START *****");
+		LOGGER.info("***** PISDR350Impl - insertSingleRow - EXECUTING {} QUERY ... *****", queryId);
 		int affectedRows = 0;
 		if(parametersEvaluation(arguments, requiredParameters)) {
 			LOGGER.info("***** PISDR350Impl - insertSingleRow - PARAMETERS OK ... EXECUTING *****");
-			LOGGER.info("***** PISDR350Impl - insertSingleRow - EXECUTING {} QUERY ... *****", queryId);
 			try {
 				affectedRows = this.jdbcUtils.update(queryId, arguments);
 			} catch (NoResultException ex) {
-				LOGGER.debug("***** PISDR350Impl - {} database exception: {} *****", queryId, ex.getMessage());
+				LOGGER.info("***** PISDR350Impl - {} database exception: {} *****", queryId, ex.getMessage());
 				affectedRows = -1;
 			}
 		} else {
-			LOGGER.debug("insertSingleRow - MISSING MANDATORY PARAMETERS {}", queryId);
+			LOGGER.info("insertSingleRow - MISSING MANDATORY PARAMETERS {}", queryId);
 		}
 		LOGGER.info("***** PISDR350Impl - insertSingleRow | Number of inserted rows: {} *****", affectedRows);
 		LOGGER.info("***** PISDR350Impl - insertSingleRow END *****");
@@ -44,7 +47,7 @@ public class PISDR350Impl extends PISDR350Abstract {
 			LOGGER.info("***** PISDR350Impl - executeGetASingleRow END *****");
 			return response;
 		} catch (NoResultException ex) {
-			LOGGER.debug("executeGetASingleRow - There wasn't no result in query {}. Reason -> {}", queryId, ex.getMessage());
+			LOGGER.info("executeGetASingleRow - There wasn't no result in query {}. Reason -> {}", queryId, ex.getMessage());
 			return null;
 		}
 	}
@@ -56,10 +59,10 @@ public class PISDR350Impl extends PISDR350Abstract {
 		try {
 			affectedRows = this.jdbcUtils.batchUpdate(queryId, argumentsArray);
 		} catch (NoResultException ex) {
-			LOGGER.debug("***** PISDR350Impl - executeMultipleInsertionOrUpdate - Database exception: {} *****", ex.getMessage());
+			LOGGER.info("***** PISDR350Impl - executeMultipleInsertionOrUpdate - Database exception: {} *****", ex.getMessage());
 			affectedRows = new int[0];
 		}
-		LOGGER.info("***** PISDR350Impl - executeMultipleInsertionOrUpdate | Number of inserted rows: {} *****", Objects.nonNull(affectedRows) ? affectedRows.length : null);
+		LOGGER.info("***** PISDR350Impl - executeMultipleInsertionOrUpdate | Number of inserted rows: {} *****", nonNull(affectedRows) ? affectedRows.length : null);
 		LOGGER.info("***** PISDR350Impl - executeMultipleInsertionOrUpdate END *****");
 		return affectedRows;
 	}
@@ -75,13 +78,13 @@ public class PISDR350Impl extends PISDR350Abstract {
 			LOGGER.info("***** PISDR022Impl - executeGetListASingleRow END *****");
 			return buildResult(response);
 		} catch (NoResultException ex) {
-			LOGGER.debug("executeGetListASingleRow - There wasn't no result in query {}. Reason -> {}", queryId, ex.getMessage());
+			LOGGER.info("executeGetListASingleRow - There wasn't no result in query {}. Reason -> {}", queryId, ex.getMessage());
 			return null;
 		}
 	}
 
 	private boolean parametersEvaluation(Map<String, Object> arguments, String... keys) {
-		return Arrays.stream(keys).allMatch(key -> Objects.nonNull(arguments.get(key)));
+		return Arrays.stream(keys).allMatch(key -> nonNull(arguments.get(key)));
 	}
 
 	private Map<String, Object> buildResult(List<Map<String, Object>> response) {
