@@ -55,6 +55,7 @@ public class PISDR350Impl extends PISDR350Abstract {
 	@Override
 	public int[] executeMultipleInsertionOrUpdate(String queryId, Map<String, Object>[] argumentsArray) {
 		LOGGER.info("***** PISDR350Impl - executeMultipleInsertionOrUpdate START *****");
+		LOGGER.info("***** PISDR350Impl - executeMultipleInsertionOrUpdate | Executing {} QUERY", queryId);
 		int[] affectedRows = null;
 		try {
 			affectedRows = this.jdbcUtils.batchUpdate(queryId, argumentsArray);
@@ -69,13 +70,13 @@ public class PISDR350Impl extends PISDR350Abstract {
 
 	@Override
 	public Map<String, Object> executeGetListASingleRow(String queryId, Map<String, Object> arguments) {
-		LOGGER.info("***** PISDR022Impl - executeGetListASingleRow START *****");
-		LOGGER.info("***** PISDR022Impl - executeGetListASingleRow | Executing {} QUERY", queryId);
+		LOGGER.info("***** PISDR350Impl - executeGetListASingleRow START *****");
+		LOGGER.info("***** PISDR350Impl - executeGetListASingleRow | Executing {} QUERY", queryId);
 		try {
 			List<Map<String, Object>> response = this.jdbcUtils.queryForList(queryId, arguments);
 			response.stream().forEach(map -> map.
 					forEach((key, value) -> LOGGER.info("[executeGetListASingleRow] Result -> Key {} with value: {}", key,value)));
-			LOGGER.info("***** PISDR022Impl - executeGetListASingleRow END *****");
+			LOGGER.info("***** PISDR350Impl - executeGetListASingleRow END *****");
 			return buildResult(response);
 		} catch (NoResultException ex) {
 			LOGGER.info("executeGetListASingleRow - There wasn't no result in query {}. Reason -> {}", queryId, ex.getMessage());
