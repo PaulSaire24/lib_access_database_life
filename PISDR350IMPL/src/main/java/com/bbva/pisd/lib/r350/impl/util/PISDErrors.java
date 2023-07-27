@@ -1,4 +1,4 @@
-package com.bbva.pisd.lib.r201.impl.utils;
+package com.bbva.pisd.lib.r350.impl.util;
 
 public enum PISDErrors {
 
