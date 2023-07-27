@@ -1,7 +1,11 @@
 package com.bbva.pisd.lib.r350.impl;
 
-import com.bbva.apx.exception.db.NoResultException;
+import com.bbva.apx.exception.business.BusinessException;
+import com.bbva.apx.exception.db.*;
 
+import com.bbva.pisd.dto.invoice.OperationDTO;
+import com.bbva.pisd.dto.invoice.constants.PISDConstant;
+import com.bbva.pisd.lib.r350.impl.util.PISDErrors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,6 +86,44 @@ public class PISDR350Impl extends PISDR350Abstract {
 			LOGGER.info("executeGetListASingleRow - There wasn't no result in query {}. Reason -> {}", queryId, ex.getMessage());
 			return null;
 		}
+	}
+
+	@Override
+	public Object executeQuery(OperationDTO operation) {
+		Object response = null;
+		LOGGER.info("[PISDR350Impl] - start executeQuery() with Param OperationDTO :: {}", operation);
+		try {
+			if(operation.getTypeOperation().equals(PISDConstant.Operation.SELECT)){
+				if(operation.isForListQuery()){
+					response = this.jdbcUtils.queryForList(operation.getNameProp(), operation.getParams());
+				}else {
+					response = this.jdbcUtils.queryForMap(operation.getNameProp(), operation.getParams());
+				}
+			}else if(operation.getTypeOperation().equals(PISDConstant.Operation.UPDATE)){
+				response = this.jdbcUtils.update(operation.getNameProp(), operation.getParams());
+			}else if(operation.getTypeOperation().equals(PISDConstant.Operation.BATCH)){
+				response = this.jdbcUtils.batchUpdate(operation.getNameProp(), operation.getBatchValues());
+			}
+
+		} catch(NoResultException ex) {
+			LOGGER.info("[PISDR350Impl] - not found data, query Empty Result to {}, {}", operation.getNameProp(),PISDErrors.QUERY_EMPTY_RESULT.getMessage());
+			this.addAdvice(PISDErrors.QUERY_EMPTY_RESULT.getAdviceCode());
+		} catch(DuplicateKeyException ex) {
+			this.addAdvice(PISDErrors.ERROR_DUPLICATE_KEY.getAdviceCode());
+			throw new BusinessException(PISDErrors.ERROR_DUPLICATE_KEY.getAdviceCode(), PISDErrors.ERROR_DUPLICATE_KEY.isRollback(), ex.getMessage());
+		} catch (TimeoutException ae){
+			this.addAdvice(PISDErrors.ERROR_TIME_OUT.getAdviceCode());
+			throw new BusinessException(PISDErrors.ERROR_TIME_OUT.getAdviceCode(), false, ae.getMessage());
+		}catch (DataIntegrityViolationException ae){
+			this.addAdvice(PISDErrors.ERROR_INTEGRITY_VIOLATION.getAdviceCode());
+			throw new BusinessException(PISDErrors.ERROR_INTEGRITY_VIOLATION.getAdviceCode(), false, ae.getMessage());
+		}catch (IncorrectResultSizeException ae){
+			this.addAdvice(PISDErrors.ERROR_INCORRECT_RESULT.getAdviceCode());
+			throw new BusinessException(PISDErrors.ERROR_INCORRECT_RESULT.getAdviceCode(), false, ae.getMessage());
+		}
+
+		LOGGER.info("[PISDR350Impl] - end executeQuery()");
+		return response;
 	}
 
 	private boolean parametersEvaluation(Map<String, Object> arguments, String... keys) {

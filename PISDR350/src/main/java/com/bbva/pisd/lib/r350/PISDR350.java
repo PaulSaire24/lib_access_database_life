@@ -1,6 +1,7 @@
 package com.bbva.pisd.lib.r350;
 
 import java.util.Map;
+import com.bbva.pisd.dto.invoice.OperationDTO;
 
 public interface PISDR350 {
 
@@ -36,6 +37,8 @@ public interface PISDR350 {
 	 * @return a list with its columns
 	 */
 	Map<String, Object> executeGetListASingleRow(String queryId, Map<String, Object> arguments);
+
+	Object executeQuery(OperationDTO sqlOperation);
 
 
 }
