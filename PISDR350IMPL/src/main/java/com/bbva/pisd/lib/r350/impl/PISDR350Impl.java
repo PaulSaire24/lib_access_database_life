@@ -4,7 +4,8 @@ import com.bbva.apx.exception.business.BusinessException;
 import com.bbva.apx.exception.db.*;
 
 import com.bbva.pisd.dto.invoice.OperationDTO;
-import com.bbva.pisd.dto.invoice.constants.PISDConstant;
+
+import com.bbva.pisd.lib.r350.impl.util.PISDConstant;
 import com.bbva.pisd.lib.r350.impl.util.PISDErrors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
