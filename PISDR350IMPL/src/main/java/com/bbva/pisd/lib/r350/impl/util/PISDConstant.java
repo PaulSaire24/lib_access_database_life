@@ -1,8 +1,6 @@
 package com.bbva.pisd.lib.r350.impl.util;
 
 public class PISDConstant {
-    public PISDConstant() {
-    }
 
     public final class Operation {
         public static final String UPDATE = "UPDATE";

@@ -1,8 +1,12 @@
 package com.bbva.pisd.lib.r350.impl;
 
 import com.bbva.apx.exception.business.BusinessException;
-import com.bbva.apx.exception.db.*;
 
+import com.bbva.apx.exception.db.DataIntegrityViolationException;
+import com.bbva.apx.exception.db.DuplicateKeyException;
+import com.bbva.apx.exception.db.IncorrectResultSizeException;
+import com.bbva.apx.exception.db.TimeoutException;
+import com.bbva.apx.exception.db.NoResultException;
 import com.bbva.pisd.dto.invoice.OperationDTO;
 
 import com.bbva.pisd.lib.r350.impl.util.PISDConstant;
