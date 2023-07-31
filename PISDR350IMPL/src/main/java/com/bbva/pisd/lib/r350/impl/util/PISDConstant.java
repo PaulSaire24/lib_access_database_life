@@ -12,12 +12,4 @@ public class PISDConstant {
         private Operation() {
         }
     }
-
-    public final class Tables {
-        public static final String TABLE_T_PISD_INSURANCE_CTR_RECEIPTS = "T_PISD_INSURANCE_CTR_RECEIPTS";
-        public static final String TABLE_T_PISD_INSURANCE_CONTRACT = "T_PISD_INSURANCE_CONTRACT";
-
-        private Tables() {
-        }
-    }
 }
