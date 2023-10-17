@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>com.bbva.pisd</groupId>
 	<artifactId>PISDR350-parent</artifactId>
-	<version>0.2.2</version>
+	<version>0.2.3</version>
 	<name>PISDR350-parent</name>
 	<description>Deployment unit lib_access_database_life of uuaa pisd</description>
 	<packaging>pom</packaging>
