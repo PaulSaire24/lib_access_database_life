@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>com.bbva.pisd</groupId>
 		<artifactId>PISDR350-parent</artifactId>
-		<version>0.2.3</version>
+		<version>0.2.4</version>
 	</parent>
 	<groupId>com.bbva.pisd</groupId>
 	<artifactId>PISDR350IMPL</artifactId>
 	<name>PISDR350IMPL</name>
-	<version>0.2.3</version>
+	<version>0.2.4</version>
 	<packaging>bundle</packaging>
 	<description>Deployment unit lib_access_database_life of uuaa pisd</description>
 	<properties>
@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>com.bbva.pisd</groupId>
 			<artifactId>PISDR350</artifactId>
-			<version>0.2.3</version>
+			<version>0.2.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.bbva.elara</groupId>
