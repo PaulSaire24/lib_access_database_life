@@ -24,6 +24,7 @@ public class PISDR350Impl extends PISDR350Abstract {
 		int affectedRows = 0;
 		if(parametersEvaluation(arguments, requiredParameters)) {
 			LOGGER.info("***** PISDR350Impl - insertSingleRow - PARAMETERS OK ... EXECUTING *****");
+			LOGGER.info("***** PISDR350Impl - insertSingleRow - PARAMETERS argument {}*****",arguments);
 			try {
 				affectedRows = this.jdbcUtils.update(queryId, arguments);
 			} catch (NoResultException ex) {
